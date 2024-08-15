@@ -4,7 +4,8 @@ Gem::Specification.new do |s|
   s.name = "dorian-csv-all"
   s.version = "0.0.1"
   s.summary = "Evaluates some code all lines of the csv input"
-  s.description = "#{s.summary}\n\ne.g. `cat users.csv | csv-all --headers \"puts it.first[:name]\"`"
+  s.description =
+    "#{s.summary}\n\ne.g. `cat users.csv | csv-all --headers \"puts it.first[:name]\"`"
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.com"
   s.files = ["bin/csv-all"]
