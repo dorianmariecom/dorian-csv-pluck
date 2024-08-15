@@ -11,7 +11,7 @@ options = { headers: false }
 argv =
   OptionParser
     .new do |opts|
-      opts.banner = "Usage: cat ... | csv-each [-h|--headers] RUBY\n\n"
+      opts.banner = "Usage: cat ... | csv-all [-h|--headers] RUBY\n\n"
 
       opts.on("-h", "--headers", "with headers") do |parse|
         options[:headers] = true
@@ -21,7 +21,8 @@ argv =
 
 abort "See --help" if argv.size != 1
 
-CSV.parse($stdin.each_line.to_a.join, headers: options[:headers]).each do |it|
-  it = it.to_h.with_indifferent_access if options[:headers]
-  eval(argv.first)
+it = CSV.parse($stdin.each_line.to_a.join, headers: options[:headers]).map do |line|
+  options[:headers] ? line.to_h.with_indifferent_access : line.to_a
 end
+
+eval(argv.first)

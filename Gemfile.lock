@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorian-csv-each (0.4.1)
+    dorian-csv-all (0.0.1)
       activesupport
       csv
 
@@ -98,7 +98,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dorian-csv-each!
+  dorian-csv-all!
   dorian-times
   rspec
   rubocop-rails-omakase
