@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "csv"
+
+if ARGV.size != 1 || ARGV.first == "--help" || ARGV.first == "-h"
+  abort "UASGE: ... | csv-pluck KEY"
+end
+
+KEY = ARGV.first
+HEADERS = KEY !~ /^[0-9]+$/
+
+CSV
+  .parse($stdin.each_line.to_a.join, headers: HEADERS)
+  .map { |row| puts row[HEADERS ? KEY : KEY.to_i] }
