@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dorian-csv-pluck (0.0.1)
+    dorian-csv-pluck (0.0.2)
       csv
       dorian-to_struct
 
