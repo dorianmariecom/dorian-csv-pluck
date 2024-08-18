@@ -3,9 +3,8 @@
 Gem::Specification.new do |s|
   s.name = "dorian-csv-pluck"
   s.version = "0.0.1"
-  s.summary = "Evaluates some code pluck lines of the csv input"
-  s.description =
-    "#{s.summary}\n\ne.g. `cat users.csv | csv-pluck --headers \"puts it.first[:name]\"`"
+  s.summary = "plucks each line of the csv input"
+  s.description = s.summary
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.com"
   s.files = ["bin/csv-pluck"]
@@ -14,5 +13,5 @@ Gem::Specification.new do |s|
   s.license = "MIT"
   s.metadata = { "rubygems_mfa_required" => "true" }
   s.add_dependency "csv"
-  s.add_dependency "activesupport"
+  s.add_dependency "dorian-to_struct"
 end
