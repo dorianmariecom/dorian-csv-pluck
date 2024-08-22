@@ -7,7 +7,9 @@ require "dorian/arguments"
 parsed =
   Dorian::Arguments.parse(
     headers: :boolean,
-    print_headers: { alias: :p },
+    print_headers: {
+      alias: :p
+    },
     version: {
       alias: :v
     },
