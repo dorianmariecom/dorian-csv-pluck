@@ -2,14 +2,54 @@
 # frozen_string_literal: true
 
 require "csv"
+require "dorian/arguments"
 
-if ARGV.size != 1 || ARGV.first == "--help" || ARGV.first == "-h"
-  abort "UASGE: ... | csv-pluck KEY"
+parsed =
+  Dorian::Arguments.parse(
+    headers: :boolean,
+    print_headers: { alias: :p },
+    version: {
+      alias: :v
+    },
+    help: {
+      alias: :h
+    }
+  )
+
+abort parsed.help if parsed.options.help
+
+if parsed.options.version
+  abort File.read(File.expand_path("../../VERSION", __FILE__))
 end
 
-KEY = ARGV.first
-HEADERS = KEY !~ /^[0-9]+$/
+keys = parsed.arguments
+inputs = parsed.files.map { |file| File.read(file) }
+inputs = [$stdin.each_line.to_a.map(&:strip).join("\n")] if inputs.empty?
+headers = parsed.options.headers || parsed.options.print_headers
+headers ||= keys.any? { |key| key.to_i.to_s != key }
 
-CSV
-  .parse($stdin.each_line.to_a.join, headers: HEADERS)
-  .map { |row| puts row[HEADERS ? KEY : KEY.to_i] }
+puts(
+  CSV.generate do |output|
+    inputs.each.with_index do |input, index|
+      input = CSV.parse(input, headers:)
+
+      if parsed.options.print_headers && index.zero?
+        output << keys.map do |key|
+          if input.headers.include?(key)
+            key
+          elsif key.to_s =~ /^[0-9]+$/
+            input.headers[key.to_i]
+          else
+            key
+          end
+        end
+      end
+
+      input.each do |row|
+        output << keys.map do |key|
+          row[key.to_s =~ /^[0-9]+$/ ? key.to_i : key]
+        end
+      end
+    end
+  end
+)
