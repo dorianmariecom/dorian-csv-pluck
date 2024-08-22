@@ -39,7 +39,7 @@ puts(
         output << keys.map do |key|
           if input.headers.include?(key)
             key
-          elsif key.to_s =~ /^[0-9]+$/
+          elsif key.to_i.to_s == key
             input.headers[key.to_i]
           else
             key
@@ -49,7 +49,7 @@ puts(
 
       input.each do |row|
         output << keys.map do |key|
-          row[key.to_s =~ /^[0-9]+$/ ? key.to_i : key]
+          row[key.to_i.to_s == key ? key.to_i : key]
         end
       end
     end
