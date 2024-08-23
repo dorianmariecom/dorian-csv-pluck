@@ -48,9 +48,7 @@ puts(
       end
 
       input.each do |row|
-        output << keys.map do |key|
-          row[key.to_i.to_s == key ? key.to_i : key]
-        end
+        output << keys.map { |key| row[key.to_i.to_s == key ? key.to_i : key] }
       end
     end
   end
