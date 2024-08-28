@@ -37,9 +37,7 @@ puts(
 
       if parsed.options.print_headers && index.zero?
         output << keys.map do |key|
-          if input.headers.include?(key)
-            key
-          elsif key.to_i.to_s == key
+          if !input.headers.include?(key) && key.to_i.to_s == key
             input.headers[key.to_i]
           else
             key
